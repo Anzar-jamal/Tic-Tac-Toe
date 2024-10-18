@@ -1,6 +1,6 @@
 const boxes = document.querySelectorAll(".box");
-const gameInfo = document.querySelectorAll(".game-info");
-const newGameBtn = document.querySelectorAll(".btn");
+const gameInfo = document.querySelector(".game-info");
+const newGameBtn = document.querySelector(".btn");
 
 
 
@@ -27,9 +27,63 @@ function initGame () {
     currentPlayer = "X";
     gameGrid = ["","","","","","","","",""];
     newGameBtn.classList.remove("active");
-    gameInfo.innerText = `current Player - ${currentPlayer}`;
+
+    // UI update of init game
+    boxes.forEach((box, index) => {
+        box.innerText = "";
+        boxes[index].style.pointerEvents="all";
+    })
+    gameInfo.innerText = `Current Player - ${currentPlayer}`;
 
 
 }
 
+
+
 initGame();
+
+
+
+function swapTurn() {
+    if(currentPlayer === "X"){
+        currentPlayer = "O";
+    }
+    else{
+        currentPlayer = "X";
+    }
+
+    gameInfo.innerText = `Current Player - ${currentPlayer}`;
+}
+
+
+function handleClick(index) {
+
+    if(gameGrid[index] === ""){
+
+        // change on UI
+        boxes[index].innerHTML = currentPlayer;
+
+
+        // change on logic code grid to count and manage
+        gameGrid[index] = currentPlayer;
+
+
+        boxes[index].style.pointerEvents="none";
+
+
+        // swap turn for 2nd player
+        swapTurn();
+    }
+}
+
+
+
+boxes.forEach( (box, index) => {
+    box.addEventListener('click', ()=>{
+
+        handleClick(index);
+    })
+});
+
+
+newGameBtn.addEventListener("click",initGame);
