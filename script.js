@@ -111,6 +111,9 @@ function checkGameOver() {
             newGameBtn.classList.add("active");
 
         }
+
+
+
 }
 
 
